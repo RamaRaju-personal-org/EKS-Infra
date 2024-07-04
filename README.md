@@ -85,7 +85,7 @@ The module provides the following outputs:
 
 ### Detailed Terraform Configuration
 
-Below is the detailed configuration for setting up an EKS cluster using Terraform.
+Below is the detailed configuration for setting up an EKS cluster using Terraform
 
 #### EKS Module Configuration
 
