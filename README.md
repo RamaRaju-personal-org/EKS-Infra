@@ -3,17 +3,7 @@
 
 This repository provides a comprehensive Terraform configuration to set up an Amazon Elastic Kubernetes Service (EKS) cluster in AWS. The configuration includes VPC setup, EKS cluster creation, and managed node groups, enabling a robust and scalable Kubernetes environment.
 
-## 📋 Table of Contents
 
-- [Overview](#overview)
-- [Prerequisites](#prerequisites)
-- [Usage](#usage)
-- [Variables](#variables)
-- [Outputs](#outputs)
-- [Notes](#notes)
-- [Tips](#tips)
-- [Important](#important)
-- [License](#license)
 
 ## 🌟 Overview
 
@@ -35,51 +25,53 @@ This Terraform module deploys an EKS cluster in AWS, including:
 To use this configuration, follow these steps:
 
 1. **Clone the repository**:
-   \`\`\`sh
+   ``` sh 
    git clone https://github.com/yourusername/your-repo-name.git
    cd your-repo-name
-   \`\`\`
+   ```
+  
+   
 
 2. **Initialize Terraform**:
-   \`\`\`sh
-   terraform init
-   \`\`\`
+   ``` sh 
+    terraform init
+   ```
 
-3. **Create a \`terraform.tfvars\` file**:
-   \`\`\`hcl
+3. **Create a terraform.tfvars file**:
+   ``` sh
    vpc_cidr_block = "10.0.0.0/16"
    private_subnet_cidr_blocks = ["10.0.1.0/24", "10.0.2.0/24"]
    public_subnet_cidr_blocks = ["10.0.101.0/24", "10.0.102.0/24"]
-   \`\`\`
+   ```
 
 4. **Apply the Terraform configuration**:
-   \`\`\`sh
+   ``` sh
    terraform apply
-   \`\`\`
+   ``` 
 
 ## 🔧 Variables
 
-- \`vpc_cidr_block\`: CIDR block for the VPC
-- \`private_subnet_cidr_blocks\`: List of CIDR blocks for private subnets
-- \`public_subnet_cidr_blocks\`: List of CIDR blocks for public subnets
+- vpc_cidr_block: CIDR block for the VPC
+- private_subnet_cidr_blocks: List of CIDR blocks for private subnets
+- public_subnet_cidr_blocks: List of CIDR blocks for public subnets
 
 ## 📦 Outputs
 
 The module provides the following outputs:
 
-- \`eks_cluster_id\`: The ID of the EKS cluster
-- \`eks_cluster_endpoint\`: The endpoint for the EKS cluster
-- \`eks_cluster_version\`: The Kubernetes version of the EKS cluster
+- eks_cluster_id: The ID of the EKS cluster
+- eks_cluster_endpoint: The endpoint for the EKS cluster
+- eks_cluster_version: The Kubernetes version of the EKS cluster
 
 ## 📝 Notes
 
 - Ensure that your AWS credentials have the necessary permissions to create and manage the resources defined in this configuration.
-- Adjust the \`desired_size\`, \`min_size\`, and \`max_size\` parameters in the \`eks_managed_node_groups\` configuration according to your workload requirements.
-- The \`single_nat_gateway\` is set to true for cost savings. For higher availability, consider setting up multiple NAT Gateways across different Availability Zones.
+- Adjust the desired_size, min_size, and max_size parameters in the eks_managed_node_groups configuration according to your workload requirements.
+- The single_nat_gateway is set to true for cost savings. For higher availability, consider setting up multiple NAT Gateways across different Availability Zones.
 
 ## 💡 Tips
 
-- Use the \`terraform plan\` command before applying changes to see a preview of the actions Terraform will take.
+- Use the terraform plan command before applying changes to see a preview of the actions Terraform will take.
 - Regularly update the Terraform AWS provider to benefit from the latest features and bug fixes.
 - Tag your resources appropriately for better management and cost allocation.
 
@@ -87,7 +79,7 @@ The module provides the following outputs:
 
 - **Security**: Ensure that the EKS cluster and associated resources are secured according to best practices. Consider using IAM roles, security groups, and network ACLs.
 - **Cost**: Be aware of the costs associated with running an EKS cluster, including the EC2 instances for worker nodes, NAT Gateway charges, and data transfer costs.
-- **Region**: The configuration specifies the \`us-east-1\` region. Modify this as needed to deploy resources in your desired AWS region.
+- **Region**: The configuration specifies the us-east-1 region. Modify this as needed to deploy resources in your desired AWS region.
 
 ---
 
@@ -97,7 +89,7 @@ Below is the detailed configuration for setting up an EKS cluster using Terrafor
 
 #### EKS Module Configuration
 
-\`\`\`hcl
+hcl
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "19.17.2"
@@ -123,7 +115,7 @@ module "eks" {
     }
   }
 }
-\`\`\`
+
 
 - **cluster_name**: Name of the EKS cluster.
 - **cluster_version**: Kubernetes version for the EKS cluster.
@@ -131,11 +123,11 @@ module "eks" {
 - **subnet_ids**: List of private subnet IDs where worker nodes will be launched.
 - **vpc_id**: ID of the VPC.
 - **tags**: Tags applied to EKS resources.
-- **eks_managed_node_groups**: Configuration for managed node groups. Here, it specifies the minimum, maximum, and desired size for the \`dev\` node group with \`t2.small\` instances.
+- **eks_managed_node_groups**: Configuration for managed node groups. Here, it specifies the minimum, maximum, and desired size for the dev node group with t2.small instances.
 
 #### Terraform Provider and Backend Configuration
 
-\`\`\`hcl
+hcl
 terraform {
   required_providers {
     aws = {
@@ -157,16 +149,16 @@ terraform {
 provider "aws" {
   region = "us-east-1"
 }
-\`\`\`
+
 
 - **required_providers**: Specifies the AWS provider with its version.
 - **required_version**: Minimum required version of Terraform.
 - **backend "s3"**: Configuration for storing Terraform state in an S3 bucket.
-- **provider "aws"**: AWS provider configuration with the region set to \`us-east-1\`.
+- **provider "aws"**: AWS provider configuration with the region set to us-east-1.
 
 #### VPC Module Configuration
 
-\`\`\`hcl
+hcl
 variable vpc_cidr_block {}
 variable private_subnet_cidr_blocks {}
 variable public_subnet_cidr_blocks {}
@@ -200,7 +192,7 @@ module "myapp-vpc" {
     "kubernetes.io/role/internal-elb"       = 1
   }
 }
-\`\`\`
+
 
 - **vpc_cidr_block**: CIDR block for the VPC.
 - **private_subnet_cidr_blocks**: List of CIDR blocks for private subnets.
